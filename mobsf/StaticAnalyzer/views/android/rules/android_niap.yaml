@@ -138,12 +138,12 @@
   selection: 'The application generate asymmetric cryptographic keys {}.'
   choice:
     - - - 'java\.security\.KeyPairGenerator|\.getInstance\(.*(?:RSA|rsa)'
-        - 512|768|1024
+        - '512;|768;|1024;'
       - >-
         not in accordance with FCS_CKM.1.1(1) using key generation algorithm RSA
         schemes and cryptographic key sizes of 1024-bit or lower
     - - - 'java\.security\.KeyPairGenerator|\.getInstance\(.*(?:RSA|rsa)'
-        - 2048|3072|4096
+        - '2048;|3072;|4096;'
       - >-
         in accordance with a specified cryptographic key generation algorithm
         RSA schemes using cryptographic key sizes of 2048-bit or greater
