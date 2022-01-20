@@ -17,6 +17,7 @@ from oscrypto import asymmetric
 from django.utils.html import escape
 
 logger = logging.getLogger(__name__)
+logging.getLogger('androguard').setLevel(logging.ERROR)
 
 
 def get_hardcoded_cert_keystore(files):
@@ -131,7 +132,10 @@ def cert_info(app_dir, app_file):
                 status,
                 'Application is signed with v1 signature scheme, '
                 'making it vulnerable to Janus vulnerability on '
-                'Android <7.0'))
+                'Android 5.0-8.0, if signed only with v1 signature'
+                ' scheme. Applications running on Android 5.0-7.0'
+                ' signed with v1, and v2/v3 '
+                'scheme is also vulnerable.'))
         if re.findall(r'CN=Android Debug', cert_info):
             findings.append((
                 'bad',
