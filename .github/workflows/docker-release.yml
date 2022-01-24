@@ -1,9 +1,8 @@
-name: 'Build and Publish to DockerHub'
+name: 'Build and Publish Release to DockerHub'
 
 on:
-    push:
-        branches:
-            - master
+  release:
+    types: [created]
 
 jobs:
     buildx:
@@ -25,11 +24,21 @@ jobs:
                 username: ${{ secrets.DOCKER_USERNAME }}
                 password: ${{ secrets.DOCKER_TOKEN }}
         -
-            name: Build and push
+            name: Get Release Tag
+            id: release
+            run: |
+              DOCKER_IMAGE=opensecurity/mobile-security-framework-mobsf
+              if [[ $GITHUB_REF == refs/tags/* ]]; then
+                VERSION=${GITHUB_REF#refs/tags/v}
+                TAG="${DOCKER_IMAGE}:v${VERSION}"
+              fi
+              echo ::set-output name=tag::${TAG}
+        -
+            name: Build and push release
             id: docker_build
             uses: docker/build-push-action@v2
             with:
                 push: true
                 context: .
                 platforms: linux/amd64,linux/arm64
-                tags: opensecurity/mobile-security-framework-mobsf:latest
+                tags: ${{ steps.release.outputs.tag }}
