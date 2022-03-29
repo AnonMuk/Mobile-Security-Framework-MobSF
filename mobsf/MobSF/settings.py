@@ -278,7 +278,11 @@ LOGGING = {
         },
     },
 }
-# ===================
+JADX_TIMEOUT = int(os.getenv('JADX_TIMEOUT', 1800))
+# ===========================
+# ENTERPRISE FEATURE REQUESTS
+# ===========================
+EFR_01 = os.getenv('EFR_01', '0')
 # USER CONFIGURATION
 # ===================
 if CONFIG_HOME:
